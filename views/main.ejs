@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%- title %>></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body class="body">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        
+        <% if(!session.name) { %>
+            <nav class="nav nav-pills flex-column flex-sm-row">
+                <a class="flex-sm-fill text-sm-center nav-link active" href="http://localhost:8080/user/login" style="margin: 0 auto 30px">Login</a>
+            </nav>
+        <% } else { %>
+            <nav class="nav nav-pills flex-column flex-sm-row">
+                    <a class="flex-sm-fill text-sm-center nav-link active" href="http://localhost:8080/user/logout" style="margin: 0 auto 30px">Logout</a>
+                </nav>
+        <% } %>
+        
+        <div id="lobby">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: white;">
+
+                <a class="navbar-brand" href="http://localhost:8080"><img src="images/logo.png" style="width: 200px;"></a>
+
+                <ul class="navbar-nav">
+                    <li>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" style="font-size: 2vh; ">방 만들기</button>
+
+                        <div class="modal fade" id="exampleModal" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">방 만들기</h5>
+                                    </div>
+                                    <form action="http://localhost:8080/room" method="POST">
+                                        <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>방 제목</label>
+                                                    <input type="text"  class="form-control" placeholder="회원님의 방" name="room-name">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>비밀번호</label>
+                                                    <input type="password" class="form-control" id="inputPassword" placeholder="비밀번호" name="room-password">
+                                                </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="submit" class="btn btn-primary" value="Create">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+            <table class="table">
+                <tr style="height: 50%;">
+                    <td class="body-body2" id="ccenter" colspan="2">
+                        <a class="nav-link" style="margin: 0 0 1vh">방 목록</a>
+
+                        <div class="box_center">
+                            <div class="box">
+                                <h1 class="font2">제목 <img src="images/lock-icon.png" width="5%"></h1>
+                                <a href="#"><div class="button">입장</div></a>
+                            </div>
+                            <div class="box">
+                                <h1 class="font2">제목 <img src="images/lock-icon.png" width="5%"></h1>
+                                <a href="#"><div class="button">입장</div></a>
+                            </div>
+                            <div class="box">
+                                <h1 class="font2">제목 <img src="images/lock-icon.png" width="5%"></h1>
+                                <a href="#"><div class="button">입장</div></a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <% if(!session.name) { %>
+                    <tr style="height: 50%;">
+                        <div style="text-align: center;">
+                            로그인이 필요합니다.
+                        </div>
+                    </tr>
+                <% } else { %>
+                    <tr style="height: 50%;">
+                        <td class="body-nav">
+                            <a class="nav-link text-ccenter " style="margin: 0 0 10px">내 정보</a>
+    
+                            <div>
+                                <div style="text-align: center; font-size: 2vh">
+                                    <%- session.name %>
+                                </div>
+    
+                                <div style="text-align: center;">
+                                    <a href="http://localhost:8080/user/information"><img src="images/ggutu.bmp" width="100vh"></a>
+                                </div>
+                            </div>
+    
+                        </td>
+        
+                        <td class="body-body" id="ccenter">
+                            <a class="nav-link text-ccenter">채팅</a>
+    
+                            <div>
+                                <textarea id="chatLog" class="chat_log" readonly></textarea>
+                            </div>
+                            <form id="chat">
+                                <input id="name" class="name" type="text" readonly>
+                                <input id="message" class="message" type="text">
+                                <input type="submit" class="chat" value="chat"/>
+                            </form>
+                        </td>
+                    </tr>
+                <% } %>
+            </table>
+        </div>
+    </body>
+</html>

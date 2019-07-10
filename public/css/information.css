@@ -1,0 +1,33 @@
+.button1
+{
+    background:#2ecc71;
+    width: 20vh;
+    height: 4vh;
+    color:white;
+    border-radius:4px;
+    border: #27ae60 1px solid;
+    margin: 3vh auto;
+    font-size:0.8em;
+}
+.button1:hover
+{
+    background:#2CC06B;
+}
+
+.crystal_table
+{
+    width: 90vh;
+    height: 50vh;
+    margin: auto;
+}
+
+#box
+{
+        background:white;
+        width: 70%;
+        min-width: 480px;
+        min-height: 370px;
+        margin: 0 auto;
+        margin-top: 10vh;
+        padding: auto;
+}

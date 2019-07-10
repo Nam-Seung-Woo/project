@@ -1,0 +1,40 @@
+<% if(message == 1) { %>
+    <script>
+        alert('등록된 아이디가 없습니다.');
+    </script>
+<% } else if(message == 2) { %> 
+    <script>
+        alert('잘못된 비밀번호입니다.');
+    </script>
+<% } else if(message == 3) { %> 
+    <script>
+        alert('아이디와 비밀번호를 모두 입력해주세요.');
+    </script>
+<% } %>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+    <div class="logo">
+        <a href="http://localhost:8080/"><img class="logo" src="../images/logo.PNG"></a>
+    </div>
+    <div id="absoluteCenteredDiv">
+        <form action="/user/login" method="post">
+            <div class="box">
+                <h1>GGutu 로그인</h1>
+                <input class="username" name="id" type="text" placeholder="ID">
+                <input class="username" name="pw" type="password" placeholder="PW">
+                <a href="http://localhost:8080/user/signup"><div class="button">회원가입</div></a>
+                <input type="submit" value="로그인" class="button">
+            </div>
+        </form>
+        <p>비밀번호를 잊어버렸어요... <a class="fpwd" href="#">클릭!</a></p>
+    </div>
+</body>
+</html>
