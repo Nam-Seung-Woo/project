@@ -18,7 +18,7 @@ module.exports.post = function(req, res) {
                 return;
             }
 
-            pool.query("SELECT * from clients where id = '" + req.body.id + "'", function(err, rows) {
+            pool.query(`SELECT * from clients where id = '${req.body.id}'`, function(err, rows) {
                 if(err) console.log(err.message);
                 else {
                     console.log(rows.length);

@@ -17,7 +17,7 @@ module.exports.post = function(req, res){
             // '' 비로그인 상태 0 회원가입 성공 1 아이디 중복 2 닉네임 중복 3 비밀번호 확인 실패
             // 4 아이디 문제 5 비밀번호 문제 6 닉네임 길이 7 전부 입력 하지 않음
             
-            pool.query("SELECT * from clients where id = '" + req.body.id + "'", function(err, rows) {
+            pool.query(`SELECT * from clients where id = '${req.body.id}'`, function(err, rows) {
                 var message = '0'; 
                 if(err) console.log(err.message);
                 else {
@@ -29,7 +29,7 @@ module.exports.post = function(req, res){
                         return;
                     }
 
-                    pool.query("SELECT * from clients where name = '" + req.body.name + "'", function(err, rows) {
+                    pool.query(`SELECT * from clients where name = '${req.body.name}'`, function(err, rows) {
                         if(err) console.log(err.message);
                         else {
                             if(rows.length == 1){
@@ -59,7 +59,7 @@ module.exports.post = function(req, res){
                                 var now = moment().format('YYYY-MM-DD');
                                 console.log(now);
 
-                                pool.query("insert into clients values('" + req.body.id + "', '" + encrypted_pw + "', '" + req.body.name + "', 0, '" + now + "', '" + now + "', '" + salt +"', 0, 0)", function(err, result){
+                                pool.query(`insert into clients values('${req.body.id}', '${encrypted_pw}', '${req.body.name}', 0, '${now}', '${now}', '${salt}', 0, 0)`, function(err, result){
                                     if(err) console.log(err.message);
                                 });
                             }

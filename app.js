@@ -23,28 +23,28 @@ app.set('views', './views');    //ejs 파일이 저장된 디렉토리
 var main = require('./routes/main');
 app.use('/', main);
 
-var user = require('./routes/user');
-app.use('/user', user);
+var count=1;
+io.on('connection', function(socket){ //3
+    console.log('user connected: ', socket.id);  //3-1
+    // var name = "user" + count++;                 //3-1
+    // io.to(socket.id).emit('change name',name);   //3-1
 
-var chat = require('./routes/chat');
-app.use('/chat', chat);
-
-var cnt = 1;
-io.on('connection', function(socket){
-    console.log('user connected: ', socket.id);
-    var name = 'user' + cnt++;
-    io.to(socket.id).emit('change name', name);
-
-    socket.on('disconnect', function(){
+    socket.on('disconnect', function(){ //3-2
         console.log('user disconnected: ', socket.id);
     });
 
-    socket.on('send message', function(name, text){
+    socket.on('send message', function(name,text){ //3-3
         var msg = name + ' : ' + text;
         console.log(msg);
         io.emit('receive message', msg);
     });
 });
+
+var user = require('./routes/user');
+app.use('/user', user);
+
+var chat = require('./routes/chat');
+app.use('/chat', chat);
 
 http.listen(8080, function(){
     console.log('8080포트에서 대기중');

@@ -45,12 +45,45 @@
 
 
 // 잡다한거?
-var alpha = 'abcde'
-var hangle = '가나다라마'
+// var alpha = 'abcde'
+// var hangle = '가나다라마'
 
-for(var c in alpha){
-    console.log(alpha[c]);
-}
-for(var c in hangle){
-    console.log(hangle[c]);
-}
+// for(var c in alpha){
+//     console.log(alpha[c]);
+// }
+// for(var c in hangle){
+//     console.log(hangle[c]);
+// }
+
+var express = require('express');
+var app = express();
+var http = require('http').Server(app); //1
+var io = require('socket.io')(http);    //1
+
+app.set('view engine', 'ejs');  //템플릿 엔진 세팅
+app.set('views', './views');    //ejs 파일이 저장된 디렉토리
+
+app.get('/',function(req, res){  //2
+  res.render('test', {});
+});
+
+var count=1;
+io.on('connection', function(socket){ //3
+  console.log('user connected: ', socket.id);  //3-1
+  var name = "user" + count++;                 //3-1
+  io.to(socket.id).emit('change name',name);   //3-1
+
+  socket.on('disconnect', function(){ //3-2
+    console.log('user disconnected: ', socket.id);
+  });
+
+  socket.on('send message', function(name,text){ //3-3
+    var msg = name + ' : ' + text;
+    console.log(msg);
+    io.emit('receive message', msg);
+  });
+});
+
+http.listen(8080, function(){ //4
+  console.log('server on!');
+});
